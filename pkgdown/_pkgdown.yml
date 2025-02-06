@@ -1,0 +1,6 @@
+url: https://ropengov.github.io/finto/
+
+template:
+  # Use Bootstrap 5 for the site styling
+  bootstrap: 5
+output_dir: docs

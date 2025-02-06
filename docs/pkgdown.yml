@@ -1,0 +1,9 @@
+pandoc: 3.2.1
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  vignette: vignette.html
+last_built: 2025-02-06T13:10Z
+urls:
+  reference: https://ropengov.github.io/finto/reference
+  article: https://ropengov.github.io/finto/articles

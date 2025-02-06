@@ -1,0 +1,37 @@
+---
+title: "Introduction to finto"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to finto}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Introduction
+
+[Finto](https://finto.fi/) is a Finnish thesaurus and ontology service that provides a centralized platform for managing and utilizing controlled vocabularies in various applications, including libraries, archives, and research institutions. It enables seamless integration with linked data and supports automated subject indexing through tools like Annif. Maintained by the National Library of Finland, Finto enhances interoperability and accessibility of structured metadata across different domains.
+
+To make a simple search Search Concepts by Query Term we use the following.
+
+```{r message = FALSE, warning = FALSE}
+library(finto)
+concepts <- search_concepts("sibelius")
+head(concepts)
+```
+
+To get available vocabularies from the Finto Skosmos API we use 
+
+```{r message = FALSE, warning = FALSE}
+library(finto)
+vocabularies <- get_vocabularies(lang = "en")
+head(vocabularies)
+```
+
+To retrieve top concepts in a vocabulary
+
+```{r message = FALSE, warning = FALSE}
+library(finto)
+top_concepts <- get_top_concepts(vocid = "yso", lang = "fi")
+head(top_concepts)
+```

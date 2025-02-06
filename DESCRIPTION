@@ -1,0 +1,33 @@
+Package: finto
+Title: What the Package Does (One Line, Title Case)
+Version: 0.1.1
+Authors@R: c(
+    person("Akewak", "Jeba", , "akjeba@utu.fi", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0007-1347-7552")),
+    person("Leo", "Lahti", , "leo.lahti@iki.fi", role = "aut",
+           comment = c(ORCID = "0000-0001-5537-637X"))
+  )
+Maintainer: Akewak Jeba <akjeba@utu.fi>  
+Description: Provides functions to access and retrieve vocabulary data 'Finto' API <https://api.finto.fi/>, which is a centralized service for interoperable thesauri, ontologies and classification schemes for different subject areas.
+License: BSD_2_clause + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    tibble,
+    httr,
+    dplyr,
+    jsonlite,
+    purrr,
+    tidyverse
+Suggests: 
+    testthat (>= 3.0.0),
+    rmarkdown,
+    knitr
+URL: https://ropengov.github.io/finto/
+BugReports: https://github.com/rOpenGov/finto/issues
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
