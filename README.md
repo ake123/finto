@@ -1,8 +1,8 @@
 # finto
 
-[![R-CMD-check](https://github.com/rOpenGov/finto/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/rOpenGov/finto/actions/workflows/check-standard.yaml)
-[![issues](https://img.shields.io/github/issues/rOpenGov/finto)](https://github.com/rOpenGov/finto/issues)
-[![pulls](https://img.shields.io/github/issues-pr/rOpenGov/finto)](https://github.com/rOpenGov/finto/pulls)
+[![R-CMD-check](https://github.com/ake123/finto/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/rOpenGov/finto/actions/workflows/check-standard.yaml)
+[![issues](https://img.shields.io/github/issues/ake123/finto)](https://github.com/ake123/finto/issues)
+[![pulls](https://img.shields.io/github/issues-pr/ake123/finto)](https://github.com/ake123/finto/pulls)
 
 
 The `finto` package provides tools to access the serivice for interoperable thesauri, ontologies and classification schemes for different subject areas. 
