@@ -17,6 +17,7 @@ This function extracts asteriIDs, fetches RDF data, and ensures only valid rows
 where \code{uri} matches the expected format (\verb{http://urn.fi/URN:NBN:fi:au:finaf:<asteriID>}).
 }
 \examples{
+ \dontrun{
 results <- process_and_fetch_kanto_info(my_data)
-print(results)
+}
 }
