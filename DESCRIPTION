@@ -17,6 +17,8 @@ Imports:
     httr,
     dplyr,
     jsonlite,
+    tidyr,
+    stringr,
     purrr,
     tidyverse
 Suggests: 
