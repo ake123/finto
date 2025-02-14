@@ -7,6 +7,7 @@
 #' @param format The MIME type of the serialization format (e.g., "application/rdf+xml" or "text/turtle"). Default is "application/json".
 #' @return A tibble containing the RDF data for the concept.
 #' @import tibble
+#' @import purrr
 #' @examples
 #' concept_data <- fetch_kanto_info(asteriID = "000094320")
 #' print(concept_data)
@@ -52,6 +53,12 @@ fetch_kanto_info <- function(asteriID, format = "application/json") {
     narrower = map_chr(graph_data, ~ safe_extract(.x, "narrower", "uri")),
     related = map_chr(graph_data, ~ safe_extract(.x, "related", "uri")),
     definition = map_chr(graph_data, ~ safe_extract(.x, "skos:definition", "value")),
+    scopeNote = map_chr(graph_data, ~ safe_extract(.x, "skos:scopeNote", "value")),
+    example = map_chr(graph_data, ~ safe_extract(.x, "skos:example", "value")),
+    historyNote = map_chr(graph_data, ~ safe_extract(.x, "skos:historyNote", "value")),
+    editorialNote = map_chr(graph_data, ~ safe_extract(.x, "skos:editorialNote", "value")),
+    changeNote = map_chr(graph_data, ~ safe_extract(.x, "skos:changeNote", "value")),
+    note = map_chr(graph_data, ~ safe_extract(.x, "skos:note", "value")),
     birthDate = map_chr(graph_data, ~ safe_extract(.x, "http://rdaregistry.info/Elements/a/P50121")),
     deathDate = map_chr(graph_data, ~ safe_extract(.x, "http://rdaregistry.info/Elements/a/P50120")),
     exactMatch = map_chr(graph_data, ~ safe_extract(.x, "exactMatch", "uri")),
