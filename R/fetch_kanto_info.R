@@ -13,6 +13,8 @@
 #' print(concept_data)
 #' @export
 fetch_kanto_info <- function(asteriID, format = "application/json") {
+  library(tibble)
+  library(purrr)
 
   base_uri <- "http://urn.fi/URN:NBN:fi:au:finaf:"
 
@@ -58,7 +60,7 @@ fetch_kanto_info <- function(asteriID, format = "application/json") {
     historyNote = map_chr(graph_data, ~ safe_extract(.x, "skos:historyNote", "value")),
     editorialNote = map_chr(graph_data, ~ safe_extract(.x, "skos:editorialNote", "value")),
     changeNote = map_chr(graph_data, ~ safe_extract(.x, "skos:changeNote", "value")),
-    note = map_chr(graph_data, ~ safe_extract(.x, "skos:note", "value")),
+    profession = map_chr(graph_data, ~ safe_extract(.x, "http://rdaregistry.info/Elements/a/P50104")),
     birthDate = map_chr(graph_data, ~ safe_extract(.x, "http://rdaregistry.info/Elements/a/P50121")),
     deathDate = map_chr(graph_data, ~ safe_extract(.x, "http://rdaregistry.info/Elements/a/P50120")),
     exactMatch = map_chr(graph_data, ~ safe_extract(.x, "exactMatch", "uri")),
@@ -70,3 +72,4 @@ fetch_kanto_info <- function(asteriID, format = "application/json") {
 
   return(rdf_tibble)
 }
+

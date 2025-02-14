@@ -34,7 +34,7 @@ process_and_fetch_kanto_info <- function(data) {
             uri = NA, type = NA, prefLabel = NA, altLabel = NA, hiddenLabel = NA,
             broader = NA, narrower = NA, related = NA, definition = NA, scopeNote = NA,
             example = NA, historyNote = NA, editorialNote = NA, changeNote = NA,
-            note = NA, birthDate = NA, deathDate = NA, exactMatch = NA, closeMatch = NA,
+            profession = NA, birthDate = NA, deathDate = NA, exactMatch = NA, closeMatch = NA,
             inScheme = NA, created = NA, modified = NA
           )
         ))
