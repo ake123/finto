@@ -12,37 +12,53 @@
 #' print(concept_data)
 #' @export
 fetch_kanto_info <- function(asteriID, format = "application/json") {
-  # Define the constant base URI
+
   base_uri <- "http://urn.fi/URN:NBN:fi:au:finaf:"
 
-  # Check if asteriID is provided
   if (missing(asteriID) || is.null(asteriID)) {
     stop("The 'asteriID' parameter is required.")
   }
 
-  # Construct the full URI
   full_uri <- paste0(base_uri, asteriID)
-
-  # Set up parameters
-  params <- list(
-    uri = full_uri,
-    format = format
-  )
-
-  # Request concept data
+  params <- list(uri = full_uri, format = format)
   response <- finto_api_request("data", params)
 
-  # Parse the graph data from the response
+  if (!is.list(response) || is.null(response$graph)) {
+    stop("Unexpected API response format.")
+  }
+
   graph_data <- response$graph
 
-  # Convert graph data into a tibble format
-  rdf_tibble <- tibble::tibble(
-    uri = sapply(graph_data, function(x) x$uri),
-    type = sapply(graph_data, function(x) paste(x$type, collapse = ", ")),
-    prefLabel = sapply(graph_data, function(x) ifelse(!is.null(x$prefLabel$value), x$prefLabel$value, NA)),
-    description = sapply(graph_data, function(x) ifelse(!is.null(x$`dc11:description`$value), x$`dc11:description`$value, NA)),
-    publisher = sapply(graph_data, function(x) ifelse(!is.null(x$`dc11:publisher`), paste(sapply(x$`dc11:publisher`, function(p) p$value), collapse = ", "), NA)),
-    contributor = sapply(graph_data, function(x) ifelse(!is.null(x$`dc11:contributor`), paste(sapply(x$`dc11:contributor`, function(c) c$value), collapse = ", "), NA))
+  # Enhanced safe_extract function to handle empty fields
+  safe_extract <- function(x, field, subfield = NULL) {
+    val <- if (!is.null(subfield)) x[[field]][[subfield]] else x[[field]]
+    if (is.null(val) || length(val) == 0) {
+      return(NA_character_)
+    }
+    if (is.list(val)) {
+      return(paste(unlist(val), collapse = ", "))
+    }
+    val
+  }
+
+  # Convert graph data into a tibble
+  rdf_tibble <- tibble(
+    uri = map_chr(graph_data, ~ safe_extract(.x, "uri")),
+    type = map_chr(graph_data, ~ safe_extract(.x, "type")),
+    prefLabel = map_chr(graph_data, ~ safe_extract(.x, "prefLabel", "value")),
+    altLabel = map_chr(graph_data, ~ safe_extract(.x, "altLabel", "value")),
+    hiddenLabel = map_chr(graph_data, ~ safe_extract(.x, "hiddenLabel", "value")),
+    broader = map_chr(graph_data, ~ safe_extract(.x, "broader", "uri")),
+    narrower = map_chr(graph_data, ~ safe_extract(.x, "narrower", "uri")),
+    related = map_chr(graph_data, ~ safe_extract(.x, "related", "uri")),
+    definition = map_chr(graph_data, ~ safe_extract(.x, "skos:definition", "value")),
+    birthDate = map_chr(graph_data, ~ safe_extract(.x, "http://rdaregistry.info/Elements/a/P50121")),
+    deathDate = map_chr(graph_data, ~ safe_extract(.x, "http://rdaregistry.info/Elements/a/P50120")),
+    exactMatch = map_chr(graph_data, ~ safe_extract(.x, "exactMatch", "uri")),
+    closeMatch = map_chr(graph_data, ~ safe_extract(.x, "closeMatch", "uri")),
+    inScheme = map_chr(graph_data, ~ safe_extract(.x, "inScheme", "uri")),
+    created = map_chr(graph_data, ~ safe_extract(.x, "dct:created", "value")),
+    modified = map_chr(graph_data, ~ safe_extract(.x, "dct:modified", "value"))
   )
 
   return(rdf_tibble)
