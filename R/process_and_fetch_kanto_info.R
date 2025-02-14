@@ -26,20 +26,21 @@ process_and_fetch_kanto_info <- function(data) {
   results <- data_clean %>%
     dplyr::rowwise() %>%
     dplyr::mutate(
-      rdf_data = if (!is.na(asteriID))
+      rdf_data = if (!is.na(asteriID)) {
         list(tryCatch(
           fetch_kanto_info(asteriID) %>%
             dplyr::filter(uri == paste0("http://urn.fi/URN:NBN:fi:au:finaf:", asteriID)),  # Only include correct row
-          error = function(e) tibble::tibble(uri = NA, type = NA, prefLabel = NA,
-                                             description = NA, publisher = NA,
-                                             contributor = NA)))
-      else list(NULL)
+          error = function(e) tibble::tibble(
+            uri = NA, type = NA, prefLabel = NA, altLabel = NA, hiddenLabel = NA,
+            broader = NA, narrower = NA, related = NA, definition = NA, scopeNote = NA,
+            example = NA, historyNote = NA, editorialNote = NA, changeNote = NA,
+            note = NA, birthDate = NA, deathDate = NA, exactMatch = NA, closeMatch = NA,
+            inScheme = NA, created = NA, modified = NA
+          )
+        ))
+      } else list(NULL)
     ) %>%
     tidyr::unnest(cols = c(rdf_data), keep_empty = TRUE)  # Ensure missing rows are preserved
 
   return(results)
 }
-
-# Example usage
-#rdf_results <- process_and_fetch_kanto_info(data)
-#print(rdf_results)
