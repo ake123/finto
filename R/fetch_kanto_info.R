@@ -13,8 +13,6 @@
 #' print(concept_data)
 #' @export
 fetch_kanto_info <- function(asteriID, format = "application/json") {
-  library(tibble)
-  library(purrr)
 
   base_uri <- "http://urn.fi/URN:NBN:fi:au:finaf:"
 
